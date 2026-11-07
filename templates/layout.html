@@ -8,9 +8,27 @@
 <body>
   <h1>Kirja-arvostelut</h1>
 
+  {% if session.user_id %}
   <p>
-    <a href="/">Etusivu</a>
+    Olet kirjautunut nimellä {{ session.username }}
   </p>
+  {% endif %}
+
+  <p>
+    <a href="/">Etusivu</a> |
+  {% if session.user_id %}
+    <a href="/logout">Kirjaudu ulos</a>
+  {% else %}
+    <a href="/login">Kirjaudu sisään</a> |
+    <a href="/register">Luo tunnus</a>
+  {% endif %}
+  </p>
+
+  {% for message in get_flashed_messages() %}
+  <p>
+    {{ message }}
+  </p>
+  {% endfor %}
 
   {% block content %}{% endblock %}
 </body>
