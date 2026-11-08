@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}Uusi kirja{% endblock %}
+
+{% block content %}
+<h2>Uusi kirja</h2>
+<form action="/create_book" method="post">
+  <p>
+    <label for="title">Nimi</label>: <br />
+    <input type="text" name="title" id="title" />
+  </p>
+  <p>
+    <label for="author">Kirjailija</label>: <br />
+    <input type="text" name="author" id="author" />
+  </p>
+  <p>
+    <label for="year">Julkaisuvuosi</label>: <br />
+    <input type="text" name="year" id="year" size="4" />
+  </p>
+  <p>
+    <label for="description">Kuvaus</label>: <br />
+    <textarea name="description" id="description" rows="8" cols="60"></textarea>
+  </p>
+  <input type="submit" value="Lisää kirja" />
+</form>
+{% endblock %}

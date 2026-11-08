@@ -3,15 +3,37 @@ import sqlite3
 from flask import Flask
 from flask import abort, flash, redirect, render_template, request, session
 
+import books
 import config
 import users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
+def require_login():
+    if "user_id" not in session:
+        abort(403)
+
+def read_book_form():
+    return (request.form["title"], request.form["author"],
+            request.form["year"], request.form["description"])
+
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/new_book")
+def new_book():
+    require_login()
+    return render_template("new_book.html")
+
+@app.route("/create_book", methods=["POST"])
+def create_book():
+    require_login()
+    title, author, year, description = read_book_form()
+    user_id = session["user_id"]
+    books.add_book(title, author, year, description, user_id)
+    return redirect("/")
 
 @app.route("/register")
 def register():
