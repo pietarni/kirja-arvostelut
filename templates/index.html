@@ -4,4 +4,17 @@
 
 {% block content %}
 <h2>Kirjat</h2>
+
+{% if books %}
+<ul>
+  {% for book in books %}
+  <li>
+    <a href="/book/{{ book.id }}">{{ book.title }}</a> ({{ book.author }}),
+    lisännyt {{ book.username }}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Sovellukseen ei ole vielä lisätty kirjoja.</p>
+{% endif %}
 {% endblock %}

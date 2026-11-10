@@ -20,7 +20,15 @@ def read_book_form():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    all_books = books.get_books()
+    return render_template("index.html", books=all_books)
+
+@app.route("/book/<int:book_id>")
+def show_book(book_id):
+    book = books.get_book(book_id)
+    if not book:
+        abort(404)
+    return render_template("show_book.html", book=book)
 
 @app.route("/new_book")
 def new_book():
@@ -32,8 +40,8 @@ def create_book():
     require_login()
     title, author, year, description = read_book_form()
     user_id = session["user_id"]
-    books.add_book(title, author, year, description, user_id)
-    return redirect("/")
+    book_id = books.add_book(title, author, year, description, user_id)
+    return redirect("/book/" + str(book_id))
 
 @app.route("/register")
 def register():
