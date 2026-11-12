@@ -26,3 +26,11 @@ def get_book(book_id):
                    books.id = ?"""
     result = db.query(sql, [book_id])
     return result[0] if result else None
+
+def update_book(book_id, title, author, year, description):
+    sql = """UPDATE books SET title = ?,
+                              author = ?,
+                              year = ?,
+                              description = ?
+                          WHERE id = ?"""
+    db.execute(sql, [title, author, year, description, book_id])

@@ -43,6 +43,21 @@ def create_book():
     book_id = books.add_book(title, author, year, description, user_id)
     return redirect("/book/" + str(book_id))
 
+@app.route("/edit_book/<int:book_id>")
+def edit_book(book_id):
+    require_login()
+    book = books.get_book(book_id)
+    return render_template("edit_book.html", book=book)
+
+@app.route("/update_book", methods=["POST"])
+def update_book():
+    require_login()
+    book_id = request.form["book_id"]
+    books.get_book(book_id)
+    title, author, year, description = read_book_form()
+    books.update_book(book_id, title, author, year, description)
+    return redirect("/book/" + str(book_id))
+
 @app.route("/register")
 def register():
     return render_template("register.html")
