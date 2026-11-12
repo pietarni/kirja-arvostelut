@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block title %}Kirjan poisto{% endblock %}
+
+{% block content %}
+<h2>{{ book.title }}</h2>
+<h3>Kirjan poisto</h3>
+<p>Haluatko varmasti poistaa tämän kirjan?</p>
+<form action="/remove_book/{{ book.id }}" method="post">
+  <input type="submit" name="remove" value="Poista kirja" />
+  <input type="submit" name="back" value="Palaa takaisin" />
+</form>
+{% endblock %}

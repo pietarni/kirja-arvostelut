@@ -58,6 +58,19 @@ def update_book():
     books.update_book(book_id, title, author, year, description)
     return redirect("/book/" + str(book_id))
 
+@app.route("/remove_book/<int:book_id>", methods=["GET", "POST"])
+def remove_book(book_id):
+    require_login()
+    book = books.get_book(book_id)
+
+    if request.method == "GET":
+        return render_template("remove_book.html", book=book)
+
+    if "remove" in request.form:
+        books.remove_book(book_id)
+        return redirect("/")
+    return redirect("/book/" + str(book_id))
+
 @app.route("/register")
 def register():
     return render_template("register.html")
