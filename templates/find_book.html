@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}Etsi kirjaa{% endblock %}
+
+{% block content %}
+<h2>Etsi kirjaa</h2>
+
+<form action="/find_book" method="get">
+  <p>
+    <label for="query">Hakusana</label>:
+    <input type="text" name="query" id="query" value="{{ query }}" />
+  </p>
+  <input type="submit" value="Hae" />
+</form>
+
+{% if query %}
+<h3>Tulokset</h3>
+{% if results %}
+<ul>
+  {% for book in results %}
+  <li><a href="/book/{{ book.id }}">{{ book.title }}</a> ({{ book.author }})</li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Hakusanalla ei löytynyt kirjoja.</p>
+{% endif %}
+{% endif %}
+{% endblock %}
